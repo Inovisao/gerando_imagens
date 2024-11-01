@@ -37,6 +37,23 @@ Certifique-se de criar essas pastas na mesma pasta onde o script está localizad
 ## Obseração
 - Há imagens nas pastas `input_files` e `background` utilizadas para teste. Para aplicação é necessário removê-las
 
+## Inserindo Token no Hubbing Face
+
+### Gerando Token
+
+- Acesse Hugging Face.
+- Faça login ou crie uma conta se ainda não tiver uma.
+- Vá para as configurações da sua conta clicando na sua foto de perfil e selecionando "Settings".
+- Vá até a seção "Access Tokens".
+- Clique em "New token" para criar um novo token. Dê um nome a ele e selecione as permissões necessárias (por exemplo, "read").
+
+### Inserindo no códgio
+
+- Entre no arquivo `insering_background.py`
+- Ache a variável `login` e insira o token lá
+
+  obs: Se não for inserida corretamente, NÃO vai funcionar.
+
 ## Como Executar
 1. **Defina os caminhos das pastas** no código `main.py`, conforme o exemplo abaixo:
 
