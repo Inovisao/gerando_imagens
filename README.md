@@ -1,1 +1,61 @@
-# imgaug_with_inpainting
+# Expand Image Repositories
+
+Este projeto é um algoritmo de aumento de dados para imagens, utilizando a biblioteca `imgaug` para aplicar técnicas de aumento (augmentations) como espelhamento, rotação, corte e ruído. Além disso, o algoritmo utiliza o método de *inpainting* da biblioteca `diffusers` para combinar imagens de entrada com fundos aleatórios, criando um conjunto expandido de imagens aumentadas e realistas.
+
+## Requisitos
+
+Para executar o código, certifique-se de ter as seguintes bibliotecas Python instaladas:
+
+- **Pillow**: para manipulação de imagens.
+- **imgaug**: para técnicas de aumento de dados em imagens.
+- **diffusers**: para inpainting usando o modelo Stable Diffusion.
+- **torch**: como backend para o modelo `diffusers`.
+- **transformers** e **accelerate**: para rodar o pipeline de inpainting da Hugging Face.
+
+### Instalação das Bibliotecas
+
+Execute os seguintes comandos para instalar as bibliotecas:
+
+```bash
+pip install pillow
+pip install imgaug
+pip install diffusers
+pip install torch
+pip install transformers accelerate
+```
+
+## Estrutura de Pastas
+
+- **`input_images/`**: Pasta onde as imagens de entrada devem ser armazenadas.
+- **`backgrounds/`**: Pasta contendo imagens de fundo para o inpainting.
+- **`output_images/`**: Pasta onde as imagens aumentadas e processadas serão salvas.
+
+Certifique-se de criar essas pastas na mesma pasta onde o script está localizado.
+
+## Uso
+
+1. **Defina os caminhos das pastas** no código `main.py`, conforme o exemplo abaixo:
+
+    ```python
+    image_folder = "./input_images"
+    background_folder = "./backgrounds"
+    output_folder = "./output_images"
+    ```
+
+2. **Execute o script principal**:
+   
+   Para rodar o script, utilize o seguinte comando:
+   
+   ```bash
+   python main.py
+   ```
+
+3. **Informe o número de imagens aumentadas a serem geradas** quando solicitado pelo programa. Esse valor controla quantas variações aumentadas serão geradas para cada imagem de entrada.
+
+## Descrição do Processo
+
+- O algoritmo carrega imagens de uma pasta de entrada (`input_images`) e aplica uma série de aumentos, como espelhamento, rotação e adição de ruído.
+- Para cada imagem aumentada, o algoritmo escolhe uma imagem de fundo aleatória da pasta `backgrounds` e aplica o método de inpainting para inserir a imagem aumentada sobre o fundo.
+- As imagens processadas são salvas na pasta de saída (`output_images`) com nomes sequenciais para facilitar o acesso e o controle.
+
+
