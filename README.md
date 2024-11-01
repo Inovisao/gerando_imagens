@@ -2,6 +2,8 @@
 
 Este projeto é um algoritmo de aumento de dados para imagens, utilizando a biblioteca `imgaug` para aplicar técnicas de aumento (augmentations) como espelhamento, rotação, corte e ruído. Além disso, o algoritmo utiliza o método de *inpainting* da biblioteca `diffusers` para combinar imagens de entrada com fundos aleatórios, criando um conjunto expandido de imagens aumentadas e realistas.
 
+
+
 ## Requisitos
 
 Para executar o código, certifique-se de ter as seguintes bibliotecas Python instaladas:
@@ -32,8 +34,10 @@ pip install transformers accelerate
 
 Certifique-se de criar essas pastas na mesma pasta onde o script está localizado.
 
-## Uso
+## Obseração
+- Há imagens nas pastas `input_files` e `background` utilizadas para teste. Para aplicação é necessário removê-las
 
+## Como Executar
 1. **Defina os caminhos das pastas** no código `main.py`, conforme o exemplo abaixo:
 
     ```python
