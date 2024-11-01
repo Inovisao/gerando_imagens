@@ -1,6 +1,6 @@
 # Expand Image Repositories
 
-Este projeto é um algoritmo de aumento de dados para imagens, utilizando a biblioteca `imgaug` para aplicar técnicas de aumento (augmentations) como espelhamento, rotação, corte e ruído. Além disso, o algoritmo utiliza o método de *inpainting* da biblioteca `diffusers` para combinar imagens de entrada com fundos aleatórios, criando um conjunto expandido de imagens aumentadas e realistas.
+Este é um algoritmo de aumento de dados para imagens, utilizando a biblioteca `imgaug` para aplicar técnicas de aumento (augmentations) como espelhamento, rotação, corte e ruído. Além disso, o algoritmo utiliza o método de *inpainting* da biblioteca `diffusers` para combinar imagens de entrada com fundos aleatórios, criando um conjunto expandido de imagens aumentadas e realistas.
 
 
 
@@ -64,6 +64,3 @@ Certifique-se de criar essas pastas na mesma pasta onde o script está localizad
 
 Esse processo cria uma série de imagens variadas e realistas, útil para expandir conjuntos de dados de imagens e aprimorar modelos de aprendizado de máquina.
 
----
-
-Se encontrar problemas, verifique se as pastas `input_images` e `backgrounds` contêm imagens com extensões válidas (`.png`, `.jpg`, `.jpeg`).
