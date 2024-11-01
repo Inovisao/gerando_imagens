@@ -1,4 +1,7 @@
-# Expand Image Repositories
+NÃO ESTÁ PRONTO
+
+
+# Gerando imagens a partir de uma única
 
 Este é um algoritmo de aumento de dados para imagens, utilizando a biblioteca `imgaug` para aplicar técnicas de aumento (augmentations) como espelhamento, rotação, corte e ruído. Além disso, o algoritmo utiliza o método de *inpainting* da biblioteca `diffusers` para combinar imagens de entrada com fundos aleatórios, criando um conjunto expandido de imagens aumentadas e realistas.
 
