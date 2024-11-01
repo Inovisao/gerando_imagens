@@ -58,4 +58,8 @@ Certifique-se de criar essas pastas na mesma pasta onde o script está localizad
 - Para cada imagem aumentada, o algoritmo escolhe uma imagem de fundo aleatória da pasta `backgrounds` e aplica o método de inpainting para inserir a imagem aumentada sobre o fundo.
 - As imagens processadas são salvas na pasta de saída (`output_images`) com nomes sequenciais para facilitar o acesso e o controle.
 
+Esse processo cria uma série de imagens variadas e realistas, útil para expandir conjuntos de dados de imagens e aprimorar modelos de aprendizado de máquina.
 
+---
+
+Se encontrar problemas, verifique se as pastas `input_images` e `backgrounds` contêm imagens com extensões válidas (`.png`, `.jpg`, `.jpeg`).
