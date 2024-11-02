@@ -22,11 +22,9 @@ Para executar o código, certifique-se de ter as seguintes bibliotecas Python in
 Execute os seguintes comandos para instalar as bibliotecas:
 
 ```bash
-pip install pillow
-pip install imgaug
-pip install diffusers
-pip install torch
-pip install transformers accelerate
+conda create --name gerando_imagens
+conda activate gerando_imagens
+pip install pillow imgaug diffusers torch transformers accelerate
 ```
 
 ## Estrutura de Pastas
