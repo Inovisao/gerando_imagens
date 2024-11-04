@@ -55,10 +55,23 @@ Certifique-se de criar essas pastas na mesma pasta onde o script está localizad
 
   obs: Se não for inserida corretamente, NÃO vai funcionar.
 
+
+ ### Adicionando dataset
+
+ - Selecione a pasta onde as imagens do seu banco de imagens que deseja processar
+ - Supondo que ela esteja em na pasta "Imagens" e o código esteja na pasta "Documentos"
+
+  
+    ```
+    cd /home/seu_usuario/
+    mv /Imagens/pasta_com_imagens/ Documentos/gerando_imanges/input_files/
+    ```
+   
+
 ## Como Executar
 1. **Defina os caminhos das pastas** no código `main.py`, conforme o exemplo abaixo:
 
-    ```python
+    ```
     image_folder = "./input_images"
     background_folder = "./backgrounds"
     output_folder = "./output_images"
