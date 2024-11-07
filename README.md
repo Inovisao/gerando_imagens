@@ -24,7 +24,7 @@ Execute os seguintes comandos para instalar as bibliotecas:
 ```bash
 conda create --name gerando_imagens
 conda activate gerando_imagens
-pip install pillow imgaug diffusers torch transformers accelerate
+pip install pillow imgaug diffusers torch transformers accelerate pillow imgaug
 ```
 
 ## Estrutura de Pastas
