@@ -2,7 +2,7 @@ import os
 import json
 from imgaug import augmenters as iaa
 from PIL import Image
-
+import numpy as np
 def process_and_augment_images(input_folder, output_folder, num_augmentations):
     json_path = os.path.join(input_folder, 'annotations.coco.json')
     
