@@ -24,7 +24,8 @@ Execute os seguintes comandos para instalar as bibliotecas:
 ```bash
 conda create --name gerando_imagens
 conda activate gerando_imagens
-pip install pillow imgaug diffusers torch transformers accelerate pillow imgaug
+pip install pillow imgaug diffusers torch transformers accelerate numpy==1.23.5 imgaug rembg psutil
+conda install -c conda-forge tbb=2021.6.0
 ```
 
 ## Estrutura de Pastas
