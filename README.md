@@ -48,7 +48,7 @@ Certifique-se de criar essas pastas na mesma pasta onde o script está localizad
 - Vá até a seção "Access Tokens".
 - Clique em "New token" para criar um novo token. Dê um nome a ele e selecione as permissões necessárias (por exemplo, "read").
 
-### Inserindo no códgio
+### Inserindo no códigio
 
 - Entre no arquivo `insering_background.py`
 - Ache a variável `login` e insira o token lá
