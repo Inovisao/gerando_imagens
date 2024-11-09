@@ -1,5 +1,3 @@
-NÃO ESTÁ PRONTO
-
 
 # Gerando imagens a partir de uma única
 
