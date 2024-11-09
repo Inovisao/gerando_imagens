@@ -23,8 +23,5 @@ def remove_background_from_directory(directory):
                 output_image.save(output_path, format='PNG')
                 print(f"Imagem sem fundo salva em: {output_path}")
                 
-                # Remove a imagem original
-                os.remove(image_path)
-                print(f"Imagem original removida: {image_path}")
             except Exception as e:
                 print(f"Erro ao processar a imagem {image_path}: {e}")
