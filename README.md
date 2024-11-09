@@ -70,11 +70,4 @@ pip install pillow imgaug diffusers torch transformers accelerate
 
 4. **Informe o número de imagens aumentadas a serem geradas** quando solicitado pelo programa. Esse valor controla quantas variações aumentadas serão geradas para cada imagem de entrada.
 
-## Descrição do Processo
-
-- O algoritmo carrega imagens de uma pasta de entrada (`input_images`) e aplica uma série de aumentos, como espelhamento, rotação e adição de ruído.
-- Para cada imagem aumentada, o algoritmo escolhe uma imagem de fundo aleatória da pasta `backgrounds` e aplica o método de inpainting para inserir a imagem aumentada sobre o fundo.
-- As imagens processadas são salvas na pasta de saída (`output_images`) com nomes sequenciais para facilitar o acesso e o controle.
-
-Esse processo cria uma série de imagens variadas e realistas, útil para expandir conjuntos de dados de imagens e aprimorar modelos de aprendizado de máquina.
 
