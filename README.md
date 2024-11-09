@@ -33,17 +33,6 @@ pip install pillow imgaug diffusers torch transformers accelerate
 - **`final_dataset/`**: Pasta onde as imagens processadas ficarão salvas.
 
 
- ### Adicionando dataset
-
- - Selecione a pasta onde as imagens do seu banco de imagens que deseja processar
- - Supondo que ela esteja em na pasta "Imagens" e o código esteja na pasta "Documentos"
-
-  
-    ```
-    cd /home/seu_usuario/
-    mv /Imagens/pasta_com_imagens/ Documentos/gerando_imanges/input_files/
-    ```
-   
 
 ## Como Executar
 1. **Defina os caminhos das pastas** no código `main.py`, conforme o exemplo abaixo:
@@ -62,7 +51,18 @@ pip install pillow imgaug diffusers torch transformers accelerate
    ```
    python main.py
    ```
-5. **Escolher opções de processamento** Se apenas quiser processar as imagens, selecione a primeira opção. Caso necessite inserir as imagens e processa-las posteriormente deve inserir a segunda opção.
+
+
+3.  ** Adicionando dataset **
+
+ - Selecione a pasta onde as imagens do seu banco de imagens que deseja processar
+ - Supondo que ela esteja em na pasta "Imagens" e o código esteja na pasta "Documentos"
+
+  
+    ```
+    cd /home/seu_usuario/
+    mv /Imagens/pasta_com_imagens/ pasta_ate_gerando_images/gerando_images/original_dataset/
+    ```
 
 - Caso selecione a primeira opção, as imagens devem ser inseridas na pasta "original_dataset" com a anotação coco.
 
