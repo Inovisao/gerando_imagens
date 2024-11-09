@@ -27,9 +27,17 @@ def inpainting_with_annotations(background_folder, original_datasets_folder, out
         with open(json_path, 'r') as json_file:
             coco_data = json.load(json_file)
 
-    # Carrega as imagens de fundo e as imagens de insetos
+    # Carrega as imagens de fundo e as imagens de insetos com fundo removido
+    
     background_images = [f for f in os.listdir(background_folder) if f.endswith(('.png', '.jpg', '.jpeg'))]
+    if not background_images:
+        print(f"Erro: Nenhuma imagem encontrada no diretório {background_images}.")
+        return
+    
     insect_images = [f for f in os.listdir(original_datasets_folder) if f.startswith('no_bg_') and f.endswith(('.png', '.jpg', '.jpeg'))]
+    if not insect_images:
+        print(f"Erro: Nenhuma imagem encontrada no diretório {insect_images}.")
+        return
 
     annotation_id = len(coco_data["annotations"]) + 1
     image_id = len(coco_data["images"]) + 1
@@ -52,7 +60,7 @@ def inpainting_with_annotations(background_folder, original_datasets_folder, out
             insect_width, insect_height = insect.size
 
             # Reduz o tamanho do inseto antes de inseri-lo no fundo
-            scale_factor = 0.1  # Fator de escala fixo de 10%
+            scale_factor = 0.08  # Fator de escala fixo de 10%
             insect = insect.resize(
                 (int(insect_width * scale_factor), int(insect_height * scale_factor)), 
                 Image.LANCZOS
