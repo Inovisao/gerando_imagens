@@ -3,18 +3,6 @@
 
 Este é um algoritmo de aumento de dados para imagens, utilizando a biblioteca `imgaug` para aplicar técnicas de aumento (augmentations) como espelhamento, rotação, corte e ruído. Além disso, o algoritmo utiliza o método de *inpainting* da biblioteca `diffusers` para combinar imagens de entrada com fundos aleatórios, criando um conjunto expandido de imagens aumentadas e realistas.
 
-
-
-## Requisitos
-
-Para executar o código, certifique-se de ter as seguintes bibliotecas Python instaladas:
-
-- **Pillow**: para manipulação de imagens.
-- **imgaug**: para técnicas de aumento de dados em imagens.
-- **diffusers**: para inpainting usando o modelo Stable Diffusion.
-- **torch**: como backend para o modelo `diffusers`.
-- **transformers** e **accelerate**: para rodar o pipeline de inpainting da Hugging Face.
-
 ### Instalação das Bibliotecas
 
 Execute os seguintes comandos para instalar as bibliotecas:
