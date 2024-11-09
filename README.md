@@ -53,7 +53,7 @@ pip install pillow imgaug diffusers torch transformers accelerate
    ```
 
 
-3.  ** Adicionando dataset **
+3.  **Adicionando dataset**:
 
  - Selecione a pasta onde as imagens do seu banco de imagens que deseja processar
  - Supondo que ela esteja em na pasta "Imagens" e o código esteja na pasta "Documentos"
