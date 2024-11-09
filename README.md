@@ -24,37 +24,15 @@ Execute os seguintes comandos para instalar as bibliotecas:
 ```bash
 conda create --name gerando_imagens
 conda activate gerando_imagens
-pip install pillow imgaug diffusers torch transformers accelerate numpy==1.23.5 imgaug rembg psutil
-conda install -c conda-forge tbb=2021.6.0
+pip install pillow imgaug diffusers torch transformers accelerate
 ```
 
 ## Estrutura de Pastas
 
 - **`input_images/`**: Pasta onde as imagens de entrada devem ser armazenadas.
 - **`backgrounds/`**: Pasta contendo imagens de fundo para o inpainting.
-- **`output_images/`**: Pasta onde as imagens aumentadas e processadas serão salvas.
-
-Certifique-se de criar essas pastas na mesma pasta onde o script está localizado.
-
-## Obseração
-- Há imagens nas pastas `input_files` e `background` utilizadas para teste. Para aplicação é necessário removê-las
-
-## Inserindo Token no Hubbing Face
-
-### Gerando Token
-
-- Acesse Hugging Face.
-- Faça login ou crie uma conta se ainda não tiver uma.
-- Vá para as configurações da sua conta clicando na sua foto de perfil e selecionando "Settings".
-- Vá até a seção "Access Tokens".
-- Clique em "New token" para criar um novo token. Dê um nome a ele e selecione as permissões necessárias (por exemplo, "read").
-
-### Inserindo no códigio
-
-- Entre no arquivo `insering_background.py`
-- Ache a variável `login` e insira o token lá
-
-  obs: Se não for inserida corretamente, NÃO vai funcionar.
+- **`output_images/`**: Pasta onde as imagens inseridas pelo inpainting estão salvas.
+- **`final_dataset/`**: Pasta onde as imagens processadas ficarão salvas.
 
 
  ### Adicionando dataset
@@ -73,20 +51,26 @@ Certifique-se de criar essas pastas na mesma pasta onde o script está localizad
 1. **Defina os caminhos das pastas** no código `main.py`, conforme o exemplo abaixo:
 
     ```
-    image_folder = "./input_images"
-    background_folder = "./backgrounds"
-    output_folder = "./output_images"
+    background_folder = "./background"
+    output_folder = "./final_dataset"
+    image_path = "./original_dataset/"
+    output_images = "./output_images"
     ```
 
 2. **Execute o script principal**:
    
    Para rodar o script, utilize o seguinte comando:
    
-   ```bash
+   ```
    python main.py
    ```
+5. **Escolher opções de processamento** Se apenas quiser processar as imagens, selecione a primeira opção. Caso necessite inserir as imagens e processa-las posteriormente deve inserir a segunda opção.
 
-3. **Informe o número de imagens aumentadas a serem geradas** quando solicitado pelo programa. Esse valor controla quantas variações aumentadas serão geradas para cada imagem de entrada.
+- Caso selecione a primeira opção, as imagens devem ser inseridas na pasta "original_dataset" com a anotação coco.
+
+- Caso selecione a segunda opção, as imagens originais devem ser inseridas na pasta "original_dataset" e as imagens de fundo na pasta "backgrounds"
+
+4. **Informe o número de imagens aumentadas a serem geradas** quando solicitado pelo programa. Esse valor controla quantas variações aumentadas serão geradas para cada imagem de entrada.
 
 ## Descrição do Processo
 
