@@ -25,5 +25,3 @@ ps(output_images, output_folder, number_process_images)
 
 print("\nProcessamento concluído com sucesso!")
 
-
-#def inpainting_with_annotations(background_folder, original_datasets_folder, output_folder, insects_per_image):
