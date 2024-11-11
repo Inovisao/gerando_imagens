@@ -9,17 +9,38 @@ from remove_background import remove_background_from_directory
 def generate_brightness_mask(image_path, threshold=90):
     image = cv2.imread(image_path)
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    
-    # Aplicar um limiar para criar uma máscara onde áreas claras são brancas
     _, mask = cv2.threshold(gray, threshold, 255, cv2.THRESH_BINARY)
     return mask
 
 def is_valid_position(mask, x, y, width, height):
-    """Verifica se a área selecionada na máscara é clara o suficiente para inserir o inseto."""
     region = mask[y:y+height, x:x+width]
-    if np.mean(region) < 200:  # Verifica se a média de brilho da região é alta
-        return False
-    return True
+    return np.mean(region) > 200
+
+def create_shadow(insect_img, offset=(5, 5), alpha=0.5):
+    """Cria uma sombra para o inseto deslocando, escurecendo e ajustando a transparência."""
+    h, w = insect_img.shape[:2]
+    shadow = insect_img.copy()
+    
+    # Tornar a imagem completamente preta (sombra)
+    shadow = cv2.multiply(shadow, np.array([0.0, 0.0, 0.0, 1.0]))  # Deixa a imagem preta mantendo a transparência
+
+    # Deslocar a sombra um pouco para baixo e para a direita
+    M = np.float32([[1, 0, offset[0]], [0, 1, offset[1]]])
+    shadow = cv2.warpAffine(shadow, M, (w, h))
+
+    # Ajustar a opacidade da sombra
+    shadow[:, :, 3] = (shadow[:, :, 3] * alpha).astype(np.uint8)
+
+    return shadow
+
+def adjust_levels(image, in_min=0, in_max=180, out_min=0, out_max=255):
+    """Ajusta os níveis da imagem para melhorar o contraste."""
+    image = np.clip((image - in_min) * ((out_max - out_min) / (in_max - in_min)) + out_min, 0, 255)
+    return image.astype(np.uint8)
+
+def decrease_brightness(image, factor=0.9):
+    """Diminui a claridade da imagem."""
+    return cv2.convertScaleAbs(image, alpha=factor, beta=0)
 
 def inpainting_with_annotations(background_folder, original_datasets_folder, output_folder, insects_per_image):
     remove_background_from_directory(original_datasets_folder)
@@ -47,16 +68,11 @@ def inpainting_with_annotations(background_folder, original_datasets_folder, out
     background_images = [f for f in os.listdir(background_folder) if f.endswith(('.png', '.jpg', '.jpeg'))]
     insect_images = [f for f in os.listdir(original_datasets_folder) if f.startswith('no_bg_') and f.endswith(('.png', '.jpg', '.jpeg'))]
 
-    if not insect_images:
-        print("Erro: Nenhuma imagem de inseto encontrada.")
-        return
-
     for background_filename in background_images:
         background_path = os.path.join(background_folder, background_filename)
-        background = Image.open(background_path).convert("RGBA")
-        bg_width, bg_height = background.size
+        background = cv2.imread(background_path)
+        bg_height, bg_width = background.shape[:2]
 
-        # Gera a máscara de brilho para a imagem de fundo
         mask = generate_brightness_mask(background_path)
 
         used_insects = set()
@@ -67,31 +83,47 @@ def inpainting_with_annotations(background_folder, original_datasets_folder, out
             while insect_filename in used_insects and len(used_insects) < len(insect_images):
                 insect_filename = random.choice(insect_images)
             used_insects.add(insect_filename)
-            
+
             insect_path = os.path.join(original_datasets_folder, insect_filename)
             insect = Image.open(insect_path).convert("RGBA")
-            insect_width, insect_height = insect.size
+            insect = insect.resize((int(insect.width * 0.2), int(insect.height * 0.2)), Image.LANCZOS)
 
-            scale_factor = 0.2 
-            insect = insect.resize((int(insect_width * scale_factor), int(insect_height * scale_factor)), Image.LANCZOS)
-            insect_width, insect_height = insect.size
+            # Converter para OpenCV (BGR com canal alfa)
+            insect_cv = cv2.cvtColor(np.array(insect), cv2.COLOR_RGBA2BGRA)
+            insect_height, insect_width = insect_cv.shape[:2]
 
             max_attempts = 10
             while max_attempts > 0:
                 x, y = random.randint(0, bg_width - insect_width), random.randint(0, bg_height - insect_height)
-                
                 if is_valid_position(mask, x, y, insect_width, insect_height):
                     break
                 max_attempts -= 1
 
             if max_attempts == 0:
-                print(f"Não foi possível encontrar uma posição válida para '{insect_filename}' em '{background_filename}'.")
                 continue
 
-            mask_alpha = insect.split()[3]
-            enhancer = ImageEnhance.Brightness(mask_alpha)
-            mask_alpha = enhancer.enhance(0.8)
-            background.paste(insect, (x, y), mask_alpha)
+            # Criar sombra
+            shadow = create_shadow(insect_cv, offset=(5, 5), alpha=0.5)
+
+            # Ajustar níveis do inseto original
+            adjusted_insect = adjust_levels(insect_cv)
+
+            # Diminuir a claridade do inseto
+            adjusted_insect = decrease_brightness(adjusted_insect, factor=0.7)
+
+            # Inserir a sombra primeiro
+            alpha_channel_shadow = shadow[:, :, 3] / 255.0
+            for c in range(3):
+                background[y:y+insect_height, x:x+insect_width, c] = \
+                    (1 - alpha_channel_shadow) * background[y:y+insect_height, x:x+insect_width, c] + \
+                    alpha_channel_shadow * shadow[:, :, c]
+
+            # Inserir o inseto ajustado
+            alpha_channel_insect = adjusted_insect[:, :, 3] / 255.0
+            for c in range(3):
+                background[y:y+insect_height, x:x+insect_width, c] = \
+                    (1 - alpha_channel_insect) * background[y:y+insect_height, x:x+insect_width, c] + \
+                    alpha_channel_insect * adjusted_insect[:, :, c]
 
             annotations_for_image.append({
                 "id": annotation_id,
@@ -104,7 +136,7 @@ def inpainting_with_annotations(background_folder, original_datasets_folder, out
             annotation_id += 1
 
         output_image_path = os.path.join(output_folder, f"combined_{image_id}.jpg")
-        background.convert("RGB").save(output_image_path)
+        cv2.imwrite(output_image_path, background)
 
         coco_data["images"].append({
             "id": image_id,
