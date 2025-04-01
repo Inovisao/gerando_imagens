@@ -1,11 +1,13 @@
-from create_folder import create_folder
-from insering_background import inpainting_with_annotations as inpainting
-from process_image import process_and_augment_images as ps
+from utils.create_folder import create_folder
+from utils.insering_background import inpainting_with_annotations as inpainting
+from utils.process_image import process_and_augment_images as ps
+from utils.process_video import process_video
 
-def main():
-    mode = int(input("Escolha o modo de operação:\n1. Apenas processar imagens\n2. Inserir imagens e processar\nEscolha: "))
-
-    if mode not in [1, 2]:
+def main(mode=None):
+    if mode is None:
+        mode = int(input("Escolha o modo de operação:\n1. Apenas processar imagens\n2. Converter vídeos em frames\n3. Inserir as imagens e processar\nEscolha: "))
+    
+    if mode not in [1, 2, 3]:
         print("Opção inválida. Saindo...")
         return
 
@@ -14,7 +16,7 @@ def main():
     # Defina aqui os caminhos da pasta
     background_folder = "./background"
     output_folder = "./final_dataset"
-    image_path = "./original_dataset/"
+    image_path = "./original_dataset"
     output_images = "./output_images"
 
     # Cria as pastas se não existirem
@@ -24,6 +26,16 @@ def main():
     create_folder(output_images)
 
     if mode == 2:
+        video_path = "./videos"
+        print("\nConvertendo vídeo em frames...")
+        process_video(video_path, background_folder)  # Frames extraídos serão usados como background
+        print("\nVídeo convertido com sucesso!")
+        
+        choice = int(input("\nDeseja inserir imagens nos fundos e processá-los?\n1. Sim\n2. Não\nEscolha: "))
+        if choice == 1:
+            main(mode=3)  # Chama a função main novamente para inserir as imagens nos fundos
+    
+    if mode == 3:
         number_per_image = int(input("Informe a quantidade de imagens a ser inseridas por fundo: "))
         print("\nInserindo imagens em fundos...")
         inpainting(background_folder, image_path, output_images, number_per_image)
